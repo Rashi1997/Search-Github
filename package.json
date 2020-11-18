@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.0",
     "cz-conventional-changelog": "^3.3.0",
+    "dotenv": "^8.2.0",
     "fontsource-roboto": "^3.0.3",
     "git-cz": "^4.7.3",
     "graphql": "^15.4.0",

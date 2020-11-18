@@ -7,7 +7,7 @@ const endpoint = 'https://api.github.com/graphql'
 const client = new GraphQLClient(endpoint, {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${process.env.GH_TOKEN}`
+      Authorization: `Bearer ${process.env.REACT_APP_GITHUB_TOKEN}`
     },
   })
 
