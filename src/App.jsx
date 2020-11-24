@@ -15,6 +15,7 @@ import {
 import data from "./data.js";
 import Repo from "./components/Repo";
 import Form from "./components/Form";
+import Drawer from "./components/Drawer";
 import _ from "lodash";
 
 export default class App extends React.Component {
@@ -42,6 +43,7 @@ export default class App extends React.Component {
     this.settopicInput = this.settopicInput.bind(this);
     this.addBookmark = this.addBookmark.bind(this);
     this.removeBookmark = this.removeBookmark.bind(this);
+    this.displayItems = this.displayItems.bind(this);
   }
 
   componentDidMount() {
@@ -213,16 +215,9 @@ export default class App extends React.Component {
       searchname,
       countByLanguage
     } = this.state;
-    if (error) {
-      return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
-      return <h1 className="App">Loading...</h1>;
-    } else {
       return (
         <div className="App">
-          <Typography variant="h3">
-            Look for top GitHub repositories!
-          </Typography>
+          <Drawer filtered={filtered} displayItems={this.displayItems} error={error} isLoaded={isLoaded}/>
           <Form
             filtered={filtered}
             sort={sort}
@@ -262,7 +257,7 @@ export default class App extends React.Component {
                 <TableBody>
                 <TableRow>
                   <TableCell colSpan={2}>
-                  <Typography align="center">
+                  <Typography variant="subtitle2" align="center">
                     Nothing found in Bookmarks
                   </Typography>
                   </TableCell>
@@ -270,9 +265,7 @@ export default class App extends React.Component {
                 </TableBody>}
             </Table>
           </TableContainer>
-          <div className="flowers">{filtered.map(this.displayItems)}</div>
         </div>
       );
-    }
   }
 }

@@ -10,6 +10,9 @@ import {
   Button,
 } from "@material-ui/core";
 import Chip from '@material-ui/core/Chip';
+import IconButton from "@material-ui/core/IconButton";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import SearchIcon from "@material-ui/icons/Search";
 
 
 class Form extends Component {
@@ -29,10 +32,20 @@ class Form extends Component {
       <form onSubmit={this.handleSubmit}>
             <TextField
               id="standard-basic"
-              label="Search keyword"
               placeholder="Search keyword"
               value={searchname}
+              variant="outlined"
               onChange={this.props.handleChange}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment>
+                    <IconButton>
+                      <SearchIcon />
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
+              size="small"
             />
             <br></br>
             <br></br>
@@ -60,8 +73,7 @@ class Form extends Component {
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    variant="standard"
-                    label="Search Topics"
+                    variant="outlined"
                     placeholder="Search Topics"
                   />
                 )}
@@ -83,8 +95,7 @@ class Form extends Component {
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    variant="standard"
-                    label="Search Languages"
+                    variant="outlined"
                     placeholder="Search Languages"
                   />
                 )}
@@ -119,7 +130,8 @@ class Form extends Component {
             )}
             <br></br>
             {filtered[0] ? (
-              <Button variant="contained" color="secondary" onClick={this.props.reset}>
+              <Button variant="contained" color="secondary" onClick={this.props.reset}
+              style={{backgroundColor:"#E34633"}}>
                 Reset
               </Button>
             ) : (

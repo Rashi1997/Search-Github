@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import Button from '@material-ui/core/Button';
-import {Card, Typography, Link, Box, CardActions, CardHeader, Avatar, CardContent, IconButton } from '@material-ui/core';
+import {Card, Typography, Link, Box, CardHeader, Avatar, CardContent, IconButton } from '@material-ui/core';
 import Chip from '@material-ui/core/Chip';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
-import { GoRepoForked, GoStar, GoLinkExternal, GoBookmark} from "react-icons/go";
+import { GoRepoForked, GoStar, GoLinkExternal} from "react-icons/go";
 const repoImages = require('repo-images')
 
 class Repo extends Component {
@@ -38,7 +37,7 @@ class Repo extends Component {
     const repos = this.props.repo.node;
     const bookmark = this.props.bookmark;
     return (
-      <Card style={{  margin: 10}}>
+      <Card style={{ width: 250,  margin: 10, boxShadow: "1px 2px 1px 1px #9E9E9E", backgroundColor: "#D2D8D0"}}>
         <CardHeader
         avatar={
           <Link href={repos.owner.url}>
@@ -49,45 +48,51 @@ class Repo extends Component {
         action={
           <Box alignSelf="center">
             {(this.unique(repos,bookmark))?
-            <IconButton aria-label="delete" onClick={this.props.removeBookmark}>
+            <IconButton aria-label="delete" onClick={this.props.removeBookmark}
+            style={{color: "#265458"}}>
               <BookmarkIcon fontSize="large" />
             </IconButton>
             :
-            <IconButton aria-label="delete" onClick={this.props.addBookmark}>
+            <IconButton aria-label="delete" onClick={this.props.addBookmark}
+            style={{color: "#265458"}}>
               <BookmarkBorderIcon fontSize="large" />
             </IconButton>
             }
             </Box>}
-        title={
-          <Typography variant="h6" style={{margin: 10}}>
+        title={ 
+          <div>
+          <Typography variant="title" style={{margin: 10, wordBreak: "break-word"}}>
             {repos.name}
-            <Link href={repos.url}>
-              <GoLinkExternal size={16}/>          
-            </Link> 
           </Typography>
+
+          <Link href={repos.url}>
+          <GoLinkExternal size={16}/>          
+          </Link> 
+          </div>
         }
         subheader={
           <div>
-
+            <Typography variant="subtitle2" style={{margin: 10, wordBreak: "break-word"}}>
           {this.changeDate(repos.updatedAt)}<br></br>
+          </Typography>
         <Chip
         size="small"
-        style={{margin: 2}}
-        icon={<GoRepoForked size={24} />}
+        style={{margin: 2, color: "white", backgroundColor: "#667765"}}
+        icon={<GoRepoForked size={16} style={{color: "white"}}/>}
         label={repos.forkCount}
         color="default"
       />
       <Chip
         size="small"
         color="default"
-        style={{margin: 2}}
-        icon={<GoStar color="yellow" size={24} />}
+        style={{margin: 2, color: "white", backgroundColor: "#667765"}}
+        icon={<GoStar color="yellow" size={16}/>}
         label={repos.stargazers.totalCount}
       />{(repos.primaryLanguage)?
       <Chip
         size="small"
         color="secondary"
-        style={{margin: 2}}
+        style={{margin: 2, color: "white", backgroundColor: "#265458"}}
         label={repos.primaryLanguage.name}
       />:""}
       </div>}
@@ -98,7 +103,7 @@ class Repo extends Component {
       width="300" style={{marginbottom: 10}}
       height="170"></img>:""} */}
       <CardContent>
-        <Typography align="justify" variant="body1" color="textSecondary" component="p">
+        <Typography align="left" variant="subtitle2" color="textSecondary" component="p">
         {repos.description}
         </Typography>
       </CardContent >
@@ -110,7 +115,7 @@ class Repo extends Component {
         return <Chip
         size="small"
         color="default"
-        style={{margin: 2}}
+        style={{margin: 2, color: "white", backgroundColor: "#E34633"}}
         label={item.topic.name}
       />
       })}
