@@ -14,7 +14,7 @@ const client = new GraphQLClient(endpoint, {
  
 const query = function(repoquery) {
     return `{
-      search(first: 10, query: ${repoquery}, type: REPOSITORY) {
+      search(first: 12, query: ${repoquery}, type: REPOSITORY) {
         edges {
           node {
             ... on Repository {
