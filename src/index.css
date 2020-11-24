@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #FFDED1;
 }
 
 code {
@@ -23,4 +24,8 @@ code {
   display: inline-flex;
   flex-wrap: wrap;
   justify-content: space-around;
+}
+
+.table {
+  max-width: 30vw;
 }
