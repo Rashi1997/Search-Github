@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { makeStyles, useTheme, withStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -9,12 +9,9 @@ import TextField from '@material-ui/core/TextField'
 import Link from '@material-ui/core/Link';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import Box from '@material-ui/core/Box';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import NativeSelect from '@material-ui/core/NativeSelect';
 import Button from '@material-ui/core/Button';
-import InputBase from '@material-ui/core/InputBase';
 import List from '@material-ui/core/List';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -27,21 +24,14 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import ToggleButton from '@material-ui/lab/ToggleButton';
-import ViewListIcon from '@material-ui/icons/ViewList';
-import ViewModuleIcon from '@material-ui/icons/ViewModule';
-import ViewQuiltIcon from '@material-ui/icons/ViewQuilt';
 import Search from "@material-ui/icons/Search";
 import Filter1 from "@material-ui/icons/Filter1";
 import Filter2 from "@material-ui/icons/Filter2";
 import Dashboard from "@material-ui/icons/Dashboard";
 import Sort from "@material-ui/icons/Sort";
 import RotateLeft from "@material-ui/icons/RotateLeft";
-import MailIcon from '@material-ui/icons/Mail';
 import Cards from "./Cards";
 import Bookmarks from "./Bookmarks";
-import { ListItemSecondaryAction } from '@material-ui/core';
 
 const drawerWidth = 300;
 const useStyles = makeStyles((theme) => ({
@@ -167,7 +157,6 @@ export default function MiniDrawer(props) {
           </IconButton>
         </div>
         <Divider />
-      <Link href="#" onClick={handleDrawerOpen} >
         <List style={{backgroundColor:"#D2D8D0"}}>
           {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
             <ListItem button key={text}>
@@ -176,7 +165,8 @@ export default function MiniDrawer(props) {
             </ListItem>
           ))} */}
           <ListItem>
-            <ListItemIcon><Search style={{color: "#265458"}}/></ListItemIcon>
+            <ListItemIcon>
+      <Link href="#" onClick={handleDrawerOpen} ><Search style={{color: "#265458"}}/></Link></ListItemIcon>
             <ListItemText 
             primary=  {<TextField
                 id="standard-basic"
@@ -190,7 +180,8 @@ export default function MiniDrawer(props) {
             </ListItemText>
           </ListItem>
           <ListItem>
-            <ListItemIcon><Filter1 style={{color: "#265458"}}/></ListItemIcon>
+            <ListItemIcon>
+      <Link href="#" onClick={handleDrawerOpen} ><Filter1 style={{color: "#265458"}}/></Link></ListItemIcon>
             <ListItemText 
             primary=  {
               <div>
@@ -231,7 +222,8 @@ export default function MiniDrawer(props) {
             </ListItemText>
           </ListItem>
           <ListItem>
-            <ListItemIcon><Filter2 style={{color: "#265458"}}/></ListItemIcon>
+            <ListItemIcon>
+      <Link href="#" onClick={handleDrawerOpen} ><Filter2 style={{color: "#265458"}}/></Link></ListItemIcon>
             <ListItemText 
             primary=  {
               <div>
@@ -263,7 +255,8 @@ export default function MiniDrawer(props) {
             </ListItemText>
           </ListItem>
           <ListItem>
-            <ListItemIcon><Sort style={{color: "#265458"}}/></ListItemIcon>
+            <ListItemIcon>
+      <Link href="#" onClick={handleDrawerOpen} ><Sort style={{color: "#265458"}}/></Link></ListItemIcon>
             <ListItemText 
             primary=  {
               <div>
@@ -289,7 +282,8 @@ export default function MiniDrawer(props) {
             </ListItemText>
           </ListItem>
           <ListItem>
-            <ListItemIcon><RotateLeft style={{color: "#265458"}}/></ListItemIcon>
+            <ListItemIcon>
+      <Link href="#" onClick={handleDrawerOpen} ><RotateLeft style={{color: "#265458"}}/></Link></ListItemIcon>
             <ListItemText style={{marginLeft: 45}}
             primary=  {
               <Button variant="contained" color="secondary" onClick={props.reset}
@@ -303,7 +297,8 @@ export default function MiniDrawer(props) {
         <Divider />
         <List style={{backgroundColor:"#D2D8D0"}}>
           <ListItem>
-            <ListItemIcon><Dashboard style={{color: "#265458"}}/></ListItemIcon>
+            <ListItemIcon>
+      <Link href="#" onClick={handleDrawerOpen} ><Dashboard style={{color: "#265458"}}/></Link></ListItemIcon>
             <ListItemText style={{marginLeft: 25}}
             primary=  {
             <Bookmarks countByLanguage={props.countByLanguage} />
@@ -311,7 +306,6 @@ export default function MiniDrawer(props) {
             </ListItemText>
           </ListItem>
         </List>
-      </Link>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />

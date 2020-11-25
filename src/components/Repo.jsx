@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Card, Typography, Link, Box, CardHeader, Avatar, CardContent, IconButton } from '@material-ui/core';
+import {Card, Typography, Box, CardHeader, Avatar, CardContent, IconButton } from '@material-ui/core';
 import Chip from '@material-ui/core/Chip';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import BookmarkIcon from '@material-ui/icons/Bookmark';

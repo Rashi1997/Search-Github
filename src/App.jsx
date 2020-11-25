@@ -69,7 +69,7 @@ export default class App extends React.Component {
         else if(query===""){
           console.log(query)
           this.setState({
-            message: "Type keyword to display cards...",
+            message: "Type keyword...",
             data: [],
             filtered: [],
             error: "no query"
@@ -259,7 +259,6 @@ export default class App extends React.Component {
       sort,
       topicsfilter,
       languagefilter,
-      searchname,
       countByLanguage,
       message
     } = this.state;
