@@ -30,10 +30,10 @@ class Repo extends Component {
       <Card style={{ width: 300,  margin: 10, boxShadow: "1px 2px 1px 1px #9E9E9E", backgroundColor: "#F4F7F2"}}>
         <CardHeader
         avatar={
-          <Link href={repos.owner.url}>
+          <a href={repos.owner.url} target="_blank" rel="noreferrer">
             <Avatar aria-label="avatar" src={repos.owner.avatarUrl} className='avatar'>
             </Avatar>
-          </Link>
+          </a>
         }
         action={
           <Box alignSelf="center">
@@ -55,9 +55,9 @@ class Repo extends Component {
             {repos.name}
           </Typography>
 
-          <Link href={repos.url}>
+          <a href={repos.url} target="_blank" rel="noreferrer">
           <GoLinkExternal size={24}/>          
-          </Link> 
+          </a> 
           </div>
         }
         subheader={

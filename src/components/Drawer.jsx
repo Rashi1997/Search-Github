@@ -6,6 +6,7 @@ import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import TextField from '@material-ui/core/TextField'
+import Link from '@material-ui/core/Link';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Box from '@material-ui/core/Box';
@@ -145,6 +146,7 @@ export default function MiniDrawer(props) {
           </Typography>
         </Toolbar>
       </AppBar>
+
       <Drawer 
         variant="permanent"
         className={clsx(classes.drawer, {
@@ -158,12 +160,14 @@ export default function MiniDrawer(props) {
           }),
         }}
       >
+
         <div className={classes.toolbar}>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </div>
         <Divider />
+      <Link href="#" onClick={handleDrawerOpen} >
         <List style={{backgroundColor:"#D2D8D0"}}>
           {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
             <ListItem button key={text}>
@@ -307,6 +311,7 @@ export default function MiniDrawer(props) {
             </ListItemText>
           </ListItem>
         </List>
+      </Link>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />

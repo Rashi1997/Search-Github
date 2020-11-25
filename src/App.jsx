@@ -12,7 +12,7 @@ export default class App extends React.Component {
     this.state = {
       error: null,
       isLoaded: false,
-      message: "Loading...",
+      message: "No results",
       data: [],
       filtered: [],
       cart: 0,
@@ -53,34 +53,48 @@ export default class App extends React.Component {
   };
 
   fetchSearchResults = async (query) => {
+    console.log(query)
+    query = _.replace(query, new RegExp('[\\\\]+'), '\\')
     data(`"${query} in:name,description"`).then(
       (result) => {
         if(result.search.edges.length>0){
           console.log(result.search.edges.length)
-        this.setState({
-          isLoaded: true,
-          message: "No results found",
-          data: result.search.edges,
-          filtered: result.search.edges,
-          error: null
-        });
-      }
-      else{
-        this.setState({
-          message: "No results found",
-          data: [],
-          filtered: []
-        });
-      }
+          this.setState({
+            isLoaded: true,
+            message: "No results found",
+            data: result.search.edges,
+            filtered: result.search.edges
+          });
+        }
+        else if(query===""){
+          console.log(query)
+          this.setState({
+            message: "Type keyword to display cards...",
+            data: [],
+            filtered: [],
+            error: "no query"
+          });
+        }
+        else{
+          this.setState({
+            message: "No results found",
+            data: [],
+            filtered: [],
+            error: "error"
+          });
+        }
       },
       (error) => {
         this.setState({
           isLoaded: true,
           message: "No results found",
-          error,
+          data: [],
+          filtered: [],
+          error: "error",
         });
       }
     );
+    this.resetall()
   };
 
   getuniquelanguages(data) {
@@ -169,7 +183,7 @@ export default class App extends React.Component {
   handleChange(event) {
     this.setState({ searchname: event.target.value, error: null });
     this.fetchSearchResults(event.target.value);
-    this.resetall()
+    // this.resetall()
     this.updatedata(this.state.topicsfilter, this.state.languagefilter, this.state.sort);
     
   }
@@ -228,11 +242,9 @@ export default class App extends React.Component {
   resetall(event) {
     this.setState({
       sort: "",
-      filtered: this.state.data,
       topicsfilter: [],
       languagefilter: null
     });
-    this.fetchSearchResults("");
   }
   clearerror() {
     this.setState({
