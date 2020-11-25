@@ -29,3 +29,11 @@ code {
 .table {
   max-width: 30vw;
 }
+
+.MuiDrawer-paperAnchorDockedLeft{
+  background-color: #D2D8D0 !important;
+}
+
+.MuiChip-deleteIcon {
+  color: white !important;
+}

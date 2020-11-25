@@ -4,7 +4,6 @@ import Chip from '@material-ui/core/Chip';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import { GoRepoForked, GoStar, GoLinkExternal} from "react-icons/go";
-const repoImages = require('repo-images')
 
 class Repo extends Component {
   constructor(props) {
@@ -13,20 +12,11 @@ class Repo extends Component {
       images: []
     };
   }
-  componentDidMount() {
-    this.fetchImages();
-  }
   unique(repo, bookmark) {
     return bookmark.filter((book)=> {
       if(book.node.nameWithOwner===repo.nameWithOwner)
     return book }).length>0
 
-  }
-  fetchImages() {
-    repoImages(this.props.repo.node.nameWithOwner).then(imagesList => {
-      // an array of image objects
-      this.setState({images: imagesList})
-    })
   }
   changeDate = (date) => {
     const today = new Date(date);
@@ -37,7 +27,7 @@ class Repo extends Component {
     const repos = this.props.repo.node;
     const bookmark = this.props.bookmark;
     return (
-      <Card style={{ width: 250,  margin: 10, boxShadow: "1px 2px 1px 1px #9E9E9E", backgroundColor: "#D2D8D0"}}>
+      <Card style={{ width: 300,  margin: 10, boxShadow: "1px 2px 1px 1px #9E9E9E", backgroundColor: "#F4F7F2"}}>
         <CardHeader
         avatar={
           <Link href={repos.owner.url}>
@@ -61,18 +51,18 @@ class Repo extends Component {
             </Box>}
         title={ 
           <div>
-          <Typography variant="title" style={{margin: 10, wordBreak: "break-word"}}>
+          <Typography variant="h6" style={{margin: 10, wordBreak: "break-word"}}>
             {repos.name}
           </Typography>
 
           <Link href={repos.url}>
-          <GoLinkExternal size={16}/>          
+          <GoLinkExternal size={24}/>          
           </Link> 
           </div>
         }
         subheader={
           <div>
-            <Typography variant="subtitle2" style={{margin: 10, wordBreak: "break-word"}}>
+            <Typography variant="subtitle1" style={{margin: 10, wordBreak: "break-word"}}>
           {this.changeDate(repos.updatedAt)}<br></br>
           </Typography>
         <Chip
@@ -103,7 +93,7 @@ class Repo extends Component {
       width="300" style={{marginbottom: 10}}
       height="170"></img>:""} */}
       <CardContent>
-        <Typography align="left" variant="subtitle2" color="textSecondary" component="p">
+        <Typography align="left" variant="body1" color="textSecondary" component="p">
         {repos.description}
         </Typography>
       </CardContent >

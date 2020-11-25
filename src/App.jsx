@@ -1,20 +1,8 @@
 import "./App.css";
 import React from "react";
 import "fontsource-roboto";
-import {
-  Typography,
-  TableContainer,
-  Table,
-  TableBody,
-  TableHead,
-  TableRow,
-  TableCell,
-  Paper,
-  Box
-} from "@material-ui/core";
 import data from "./data.js";
 import Repo from "./components/Repo";
-import Form from "./components/Form";
 import Drawer from "./components/Drawer";
 import _ from "lodash";
 
@@ -24,6 +12,7 @@ export default class App extends React.Component {
     this.state = {
       error: null,
       isLoaded: false,
+      message: "Loading...",
       data: [],
       filtered: [],
       cart: 0,
@@ -32,10 +21,11 @@ export default class App extends React.Component {
       topicsfilter: [],
       sort: "",
       bookmark: [],
-      countByLanguage: {}
+      countByLanguage: {},
     };
     this.handleChange = this.handleChange.bind(this);
     this.reset = this.reset.bind(this);
+    this.resetall = this.resetall.bind(this);
     this.radiochange = this.radiochange.bind(this);
     this.setlanguageInput = this.setlanguageInput.bind(this);
     this.getuniquelanguages = this.getuniquelanguages.bind(this);
@@ -44,6 +34,7 @@ export default class App extends React.Component {
     this.addBookmark = this.addBookmark.bind(this);
     this.removeBookmark = this.removeBookmark.bind(this);
     this.displayItems = this.displayItems.bind(this);
+    this.clearerror = this.clearerror.bind(this);
   }
 
   componentDidMount() {
@@ -51,22 +42,41 @@ export default class App extends React.Component {
   }
 
   displayItems = (repo) => {
-    return <Repo repo={repo} addBookmark={()=>this.addBookmark(repo)}
-    removeBookmark={()=>this.removeBookmark(repo.node.nameWithOwner)} bookmark={this.state.bookmark}></Repo>;
+    return (
+      <Repo
+        repo={repo}
+        addBookmark={() => this.addBookmark(repo)}
+        removeBookmark={() => this.removeBookmark(repo.node.nameWithOwner)}
+        bookmark={this.state.bookmark}
+      ></Repo>
+    );
   };
 
   fetchSearchResults = async (query) => {
     data(`"${query} in:name,description"`).then(
       (result) => {
+        if(result.search.edges.length>0){
+          console.log(result.search.edges.length)
         this.setState({
           isLoaded: true,
+          message: "No results found",
           data: result.search.edges,
           filtered: result.search.edges,
+          error: null
         });
+      }
+      else{
+        this.setState({
+          message: "No results found",
+          data: [],
+          filtered: []
+        });
+      }
       },
       (error) => {
         this.setState({
           isLoaded: true,
+          message: "No results found",
           error,
         });
       }
@@ -131,16 +141,20 @@ export default class App extends React.Component {
     }
     let sortonstars = filteredOnLanguage;
     if (sortoption) {
+      let op;
+      if(sortoption==="asc") op="asc"
+      else op="desc"
+      console.log(op)
       sortonstars = _.orderBy(
         sortonstars,
         (item) => item.node.stargazers.totalCount,
-        sortoption
+        op
       );
     }
     if (sortonstars.length !== 0) {
       this.setState({ filtered: sortonstars });
     } else {
-      this.setState({ filtered: this.state.data });
+      this.setState({ filtered: sortonstars });
     }
   }
   settopicInput(newInputValue) {
@@ -153,8 +167,11 @@ export default class App extends React.Component {
     this.updatedata(this.state.topicsfilter, newInputValue, this.state.sort);
   }
   handleChange(event) {
-    this.setState({ searchname: event.target.value });
+    this.setState({ searchname: event.target.value, error: null });
     this.fetchSearchResults(event.target.value);
+    this.resetall()
+    this.updatedata(this.state.topicsfilter, this.state.languagefilter, this.state.sort);
+    
   }
   radiochange = (event) => {
     this.setState({ sort: event.target.value });
@@ -167,32 +184,36 @@ export default class App extends React.Component {
   addBookmark(repo) {
     const bookmark = [...this.state.bookmark, repo];
     this.setState({ bookmark });
-    this.updateStatistics(bookmark)
+    this.updateStatistics(bookmark);
   }
   removeBookmark(nameWithOwner) {
-    const bookmark = this.state.bookmark.filter(k => k.node.nameWithOwner !== nameWithOwner);
+    const bookmark = this.state.bookmark.filter(
+      (k) => k.node.nameWithOwner !== nameWithOwner
+    );
     this.setState({ bookmark });
-    this.updateStatistics(bookmark)
+    this.updateStatistics(bookmark);
   }
   updateStatistics(bookmark) {
-    let counts = new Map()
-    bookmark.map((item)=> {
-      if(item.node.primaryLanguage)
-      {
-        let languagecount = counts.get(item.node.primaryLanguage.name)
-      
-        counts.set(item.node.primaryLanguage.name, languagecount ? languagecount+1 : 1)
+    let counts = new Map();
+    bookmark.map((item) => {
+      if (item.node.primaryLanguage) {
+        let languagecount = counts.get(item.node.primaryLanguage.name);
+
+        counts.set(
+          item.node.primaryLanguage.name,
+          languagecount ? languagecount + 1 : 1
+        );
       }
-      return counts
-    })
-    console.log(counts)
+      return counts;
+    });
+    console.log(counts);
     let object = {};
     counts.forEach((value, key) => {
-      var keys = key.split('.'),
-          last = keys.pop();
-      keys.reduce((r, a) => r[a] = r[a] || {}, object)[last] = value;
-  });
-    this.setState({countByLanguage: object})
+      var keys = key.split("."),
+        last = keys.pop();
+      keys.reduce((r, a) => (r[a] = r[a] || {}), object)[last] = value;
+    });
+    this.setState({ countByLanguage: object });
   }
   reset(event) {
     this.setState({
@@ -200,9 +221,23 @@ export default class App extends React.Component {
       filtered: this.state.data,
       topicsfilter: [],
       languagefilter: null,
-      searchname: ""
+      searchname: "",
     });
     this.fetchSearchResults("");
+  }
+  resetall(event) {
+    this.setState({
+      sort: "",
+      filtered: this.state.data,
+      topicsfilter: [],
+      languagefilter: null
+    });
+    this.fetchSearchResults("");
+  }
+  clearerror() {
+    this.setState({
+      error: null
+    });
   }
   render() {
     const {
@@ -213,59 +248,33 @@ export default class App extends React.Component {
       topicsfilter,
       languagefilter,
       searchname,
-      countByLanguage
+      countByLanguage,
+      message
     } = this.state;
-      return (
-        <div className="App">
-          <Drawer filtered={filtered} displayItems={this.displayItems} error={error} isLoaded={isLoaded}/>
-          <Form
-            filtered={filtered}
-            sort={sort}
-            topicsfilter={topicsfilter}
-            languagefilter={languagefilter}
-            searchname={searchname}
-            handleChange={this.handleChange}
-            settopicInput={this.settopicInput}
-            getuniquetopics={this.getuniquetopics}
-            setlanguageInput={this.setlanguageInput}
-            getuniquelanguages={this.getuniquelanguages}
-            radiochange={this.radiochange}
-            reset={this.reset}
-          />
-          <br></br>
-          <Typography variant="h5">
-          Statistics in Bookmarks:
-          </Typography>
-          <br></br>
-          <TableContainer className="table" component={Paper}>
-            <Table aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell align="center">Language</TableCell>
-                  <TableCell align="center">Count</TableCell>
-                </TableRow>
-              </TableHead>
-              
-                {(Object.keys(countByLanguage).length)? Object.keys(countByLanguage).map((key) => (
-                  <TableBody>
-                  <TableRow key={key}>
-                    <TableCell align="center">{key}</TableCell>
-                    <TableCell align="center">{countByLanguage[key]}</TableCell>
-                  </TableRow>
-                  </TableBody>
-              )):
-                <TableBody>
-                <TableRow>
-                  <TableCell colSpan={2}>
-                  <Typography variant="subtitle2" align="center">
-                    Nothing found in Bookmarks
-                  </Typography>
-                  </TableCell>
-                </TableRow>
-                </TableBody>}
-            </Table>
-          </TableContainer>
-        </div>
-      );
+    return (
+      <div className="App">
+        <Drawer
+          filtered={filtered}
+          displayItems={this.displayItems}
+          error={error}
+          isLoaded={isLoaded}
+          message={message}
+          searchname={this.state.searchname}
+          handleChange={this.handleChange}
+          sort={sort}
+          topicsfilter={topicsfilter}
+          languagefilter={languagefilter}
+          settopicInput={this.settopicInput}
+          getuniquetopics={this.getuniquetopics}
+          setlanguageInput={this.setlanguageInput}
+          getuniquelanguages={this.getuniquelanguages}
+          radiochange={this.radiochange}
+          reset={this.reset}
+          countByLanguage={countByLanguage}
+          clearerror={this.clearerror}
+        />
+        
+      </div>
+    );
   }
 }
