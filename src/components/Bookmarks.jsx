@@ -1,15 +1,15 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
-import { withStyles } from '@material-ui/core/styles';
-import MuiDialogTitle from '@material-ui/core/DialogTitle';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import Typography from '@material-ui/core/Typography';
+import React from "react";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
+import MuiDialogTitle from "@material-ui/core/DialogTitle";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+import Typography from "@material-ui/core/Typography";
 import {
   TableContainer,
   Table,
@@ -23,7 +23,7 @@ import {
 export default function Bookmarks(props) {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -38,7 +38,7 @@ export default function Bookmarks(props) {
       padding: theme.spacing(2),
     },
     closeButton: {
-      position: 'absolute',
+      position: "absolute",
       right: theme.spacing(1),
       top: theme.spacing(1),
       color: theme.palette.grey[500],
@@ -50,7 +50,11 @@ export default function Bookmarks(props) {
       <MuiDialogTitle disableTypography className={classes.root} {...other}>
         <Typography variant="h6">{children}</Typography>
         {onClose ? (
-          <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
+          <IconButton
+            aria-label="close"
+            className={classes.closeButton}
+            onClick={onClose}
+          >
             <CloseIcon />
           </IconButton>
         ) : null}
@@ -60,9 +64,13 @@ export default function Bookmarks(props) {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}
-      style={{backgroundColor:"#265458", color: "white"}}>
-      BookMarks
+      <Button
+        variant="outlined"
+        color="primary"
+        onClick={handleClickOpen}
+        style={{ backgroundColor: "#265458", color: "white" }}
+      >
+        BookMarks
       </Button>
       <Dialog
         fullScreen={fullScreen}
@@ -75,12 +83,16 @@ export default function Bookmarks(props) {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-              <TableContainer className="table" component={Paper}>
+            <TableContainer className="table" component={Paper}>
               <Table aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell align="center" style={{fontWeight: "bold"}}>Language</TableCell>
-                    <TableCell align="center" style={{fontWeight: "bold"}}>Count</TableCell>
+                    <TableCell align="center" style={{ fontWeight: "bold" }}>
+                      Language
+                    </TableCell>
+                    <TableCell align="center" style={{ fontWeight: "bold" }}>
+                      Count
+                    </TableCell>
                   </TableRow>
                 </TableHead>
 
@@ -89,7 +101,9 @@ export default function Bookmarks(props) {
                     <TableBody>
                       <TableRow key={key}>
                         <TableCell align="center">{key}</TableCell>
-                        <TableCell align="center">{props.countByLanguage[key]}</TableCell>
+                        <TableCell align="center">
+                          {props.countByLanguage[key]}
+                        </TableCell>
                       </TableRow>
                     </TableBody>
                   ))

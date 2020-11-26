@@ -7,14 +7,12 @@ export default function Cards(props) {
   } else if (props.error === "error" || props.error) {
     return <h1>No results found</h1>;
   } else if (!props.isLoaded) {
-    return (
-      <RingLoader size={150} color={"#265458"} loading='true' />
-    );
+    return <RingLoader size={150} color={"#265458"} loading="true" />;
   } else {
     return props.filtered.length > 0 ? (
       <div className="flowers">{props.filtered.map(props.displayItems)}</div>
     ) : (
-      <RingLoader size={150} color={"#265458"} loading='true' />
+      <RingLoader size={150} color={"#265458"} loading="true" />
     );
   }
 }
