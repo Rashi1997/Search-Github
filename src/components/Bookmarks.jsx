@@ -7,23 +7,17 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { withStyles } from "@material-ui/core/styles";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
+import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
-import {
-  TableContainer,
-  Table,
-  TableBody,
-  TableHead,
-  TableRow,
-  TableCell,
-  Paper,
-} from "@material-ui/core";
+import ReactWordcloud from "react-wordcloud";
+import Cards from "./Cards";
 
 export default function Bookmarks(props) {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const fullScreen = useMediaQuery(theme.breakpoints.down("lg"));
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -61,7 +55,30 @@ export default function Bookmarks(props) {
       </MuiDialogTitle>
     );
   });
+  const countFormat = (countByLanguage) => {
+    let objects = [];
+    Object.keys(countByLanguage).forEach((key) => {
+      objects.push({ "text": key, "value": countByLanguage[key] });
+    });
+    return objects
+  };
+  const options = {
+    colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b"],
+    enableTooltip: true,
+    deterministic: false,
+    fontFamily: "impact",
+    fontSizes: [20, 60],
+    fontStyle: "normal",
+    fontWeight: "normal",
+    padding: 1,
+    rotations: 3,
+    rotationAngles: [0, 90],
+    scale: "sqrt",
+    spiral: "archimedean",
+    transitionDuration: 1000,
+  };
 
+const size = [500, 200];
   return (
     <div>
       <Button
@@ -83,43 +100,29 @@ export default function Bookmarks(props) {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            <TableContainer className="table" component={Paper}>
-              <Table aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell align="center" style={{ fontWeight: "bold" }}>
-                      Language
-                    </TableCell>
-                    <TableCell align="center" style={{ fontWeight: "bold" }}>
-                      Count
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-
+            <Box display="flex" flexDirection="column"  alignItems="stretch" padding={1}>
+              <Box alignSelf="center">
                 {Object.keys(props.countByLanguage).length ? (
-                  Object.keys(props.countByLanguage).map((key) => (
-                    <TableBody>
-                      <TableRow key={key}>
-                        <TableCell align="center">{key}</TableCell>
-                        <TableCell align="center">
-                          {props.countByLanguage[key]}
-                        </TableCell>
-                      </TableRow>
-                    </TableBody>
-                  ))
+                  <ReactWordcloud
+                    options={options}
+                    size={size}
+                    words={countFormat(props.countByLanguage)}
+                  />
                 ) : (
-                  <TableBody>
-                    <TableRow>
-                      <TableCell colSpan={2}>
-                        <Typography variant="subtitle2" align="center">
-                          Nothing found in Bookmarks
-                        </Typography>
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
+                  "Nothing in Bookmarks"
                 )}
-              </Table>
-            </TableContainer>
+              </Box>
+              <Box>
+                <Cards
+                  bookmark={props.bookmark}
+                  filtered={props.bookmark}
+                  addBookmark={props.addBookmark}
+                  removeBookmark={props.removeBookmark}
+                  type = "bookmarks"
+                  isLoaded={true}
+                />
+              </Box>
+            </Box>
           </DialogContentText>
         </DialogContent>
       </Dialog>

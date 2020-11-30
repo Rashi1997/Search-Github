@@ -137,11 +137,6 @@ class Repo extends Component {
             </div>
           }
         />
-        {/* {(this.state.images[0])?
-        <img src={`${repos.url}/blob/master/${this.state.images[0].path}?raw=true`}
-      alt="repo"
-      width="300" style={{marginbottom: 10}}
-      height="170"></img>:""} */}
         <CardContent>
           <Typography
             align="left"

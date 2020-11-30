@@ -1,7 +1,7 @@
 import React from "react";
 import "fontsource-roboto";
 import data from "../data.js";
-import Repo from "./Repo";
+import Repo from "./RepoCard";
 import Drawer from "./Drawer";
 import _ from "lodash";
 
@@ -11,7 +11,6 @@ export default class Filtered extends React.Component {
     this.state = {
       error: null,
       isLoaded: false,
-      message: "No results",
       data: [],
       filtered: [],
       cart: 0,
@@ -33,7 +32,6 @@ export default class Filtered extends React.Component {
     this.addBookmark = this.addBookmark.bind(this);
     this.removeBookmark = this.removeBookmark.bind(this);
     this.displayItems = this.displayItems.bind(this);
-    this.clearerror = this.clearerror.bind(this);
   }
 
   componentDidMount() {
@@ -52,29 +50,23 @@ export default class Filtered extends React.Component {
   };
 
   fetchSearchResults = async (query) => {
-    console.log(query);
     query = _.replace(query, new RegExp("[\\\\]+"), "\\");
     data(`"${query} in:name,description"`).then(
       (result) => {
         if (result.search.edges.length > 0) {
-          console.log(result.search.edges.length);
           this.setState({
             isLoaded: true,
-            message: "No results found",
             data: result.search.edges,
             filtered: result.search.edges,
           });
         } else if (query === "") {
-          console.log(query);
           this.setState({
-            message: "Type keyword...",
             data: [],
             filtered: [],
             error: "no query",
           });
         } else {
           this.setState({
-            message: "No results found",
             data: [],
             filtered: [],
             error: "error",
@@ -84,7 +76,6 @@ export default class Filtered extends React.Component {
       (error) => {
         this.setState({
           isLoaded: true,
-          message: "No results found",
           data: [],
           filtered: [],
           error: "error",
@@ -155,7 +146,6 @@ export default class Filtered extends React.Component {
       let op;
       if (sortoption === "asc") op = "asc";
       else op = "desc";
-      console.log(op);
       sortonstars = _.orderBy(
         sortonstars,
         (item) => item.node.stargazers.totalCount,
@@ -211,16 +201,26 @@ export default class Filtered extends React.Component {
     let counts = new Map();
     bookmark.map((item) => {
       if (item.node.primaryLanguage) {
-        let languagecount = counts.get(item.node.primaryLanguage.name);
+        let languagecount = counts.get(item.node.primaryLanguage.name.toLowerCase());
 
         counts.set(
-          item.node.primaryLanguage.name,
+          item.node.primaryLanguage.name.toLowerCase(),
           languagecount ? languagecount + 1 : 1
         );
       }
+      if(item.node.repositoryTopics){
+        let topic = item.node.repositoryTopics.nodes
+        topic.map((item)=>item.topic.name).forEach((topic)=>{
+          let languagecount = counts.get(topic.toLowerCase());
+
+        counts.set(
+          topic.toLowerCase(),
+          languagecount ? languagecount + 1 : 1
+        );
+      })
+      }
       return counts;
     });
-    console.log(counts);
     let object = {};
     counts.forEach((value, key) => {
       var keys = key.split("."),
@@ -246,11 +246,6 @@ export default class Filtered extends React.Component {
       languagefilter: null,
     });
   }
-  clearerror() {
-    this.setState({
-      error: null,
-    });
-  }
   render() {
     const {
       error,
@@ -261,12 +256,14 @@ export default class Filtered extends React.Component {
       languagefilter,
       countByLanguage,
       message,
+      bookmark
     } = this.state;
     return (
       <div className="App">
         <Drawer
           filtered={filtered}
-          displayItems={this.displayItems}
+          addBookmark={this.addBookmark}
+          removeBookmark={this.removeBookmark}
           error={error}
           isLoaded={isLoaded}
           message={message}
@@ -282,7 +279,7 @@ export default class Filtered extends React.Component {
           radiochange={this.radiochange}
           reset={this.reset}
           countByLanguage={countByLanguage}
-          clearerror={this.clearerror}
+          bookmark={bookmark}
         />
       </div>
     );

@@ -213,7 +213,7 @@ export default function MiniDrawer(props) {
                     style={{ width: 200 }}
                     renderTags={(value, getTagProps) =>
                       value.map((option, index) => (
-                        <Chip
+                        <Chip key={option}
                           label={option}
                           size="small"
                           style={{ backgroundColor: "#E34633", color: "white" }}
@@ -335,7 +335,9 @@ export default function MiniDrawer(props) {
             </ListItemIcon>
             <ListItemText
               style={{ marginLeft: 25 }}
-              primary={<Bookmarks countByLanguage={props.countByLanguage} />}
+              primary={<Bookmarks 
+                addBookmark={props.addBookmark}
+                removeBookmark={props.removeBookmark} bookmark={props.bookmark} countByLanguage={props.countByLanguage} />}
             ></ListItemText>
           </ListItem>
         </List>
@@ -343,11 +345,12 @@ export default function MiniDrawer(props) {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Cards
-          clearerror={props.clearerror}
+          bookmark={props.bookmark}
           filtered={props.filtered}
-          displayItems={props.displayItems}
+          addBookmark={props.addBookmark}
+          removeBookmark={props.removeBookmark}
           error={props.error}
-          isLoaded={props.isLoaded}
+          isLoaded={true}
         />
       </main>
     </div>
