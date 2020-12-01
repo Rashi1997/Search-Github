@@ -24,7 +24,7 @@
   <p align="center">
     A React app to look for popular repositories by keywords and topics!
     <br />
-    <a href="https://github.com/Rashi1997/Search-Github"><strong>Explore the docs »</strong></a>
+    <a href="https://warm-castle-41635.herokuapp.com/"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="images/screenshot.mov">View Demo</a>
@@ -287,7 +287,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - Rashi Dhar
+Rashi Dhar
 
 Project Link: [https://github.com/Rashi1997/Search-Github](https://github.com/Rashi1997/Search-Github)
 
