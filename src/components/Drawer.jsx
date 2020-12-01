@@ -184,7 +184,7 @@ export default function MiniDrawer(props) {
         }}
       >
         <div className={classes.toolbar}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={handleDrawerClose} alt="righticon">
             {theme.direction === "rtl" ? (
               <ChevronRightIcon fontSize="large" />
             ) : (
@@ -210,6 +210,7 @@ export default function MiniDrawer(props) {
                   variant="outlined"
                   onChange={props.handleChange}
                   size="small"
+                  label="search by keyword"
                 />
               }
             ></ListItemText>
@@ -254,11 +255,13 @@ export default function MiniDrawer(props) {
                         />
                       ))
                     }
+                    label="search by topics"
                     renderInput={(params) => (
                       <TextField
                         {...params}
                         variant="outlined"
                         placeholder="Search Topics"
+                        label="search"
                       />
                     )}
                   />
@@ -300,6 +303,7 @@ export default function MiniDrawer(props) {
                         {...params}
                         variant="outlined"
                         placeholder="Search Languages"
+                        label="search languages"
                       />
                     )}
                   />
@@ -316,7 +320,7 @@ export default function MiniDrawer(props) {
             <ListItemText
               primary={
                 <div>
-                  <InputLabel style={{ margin: 5 }}>Sort by stars</InputLabel>
+                  <InputLabel label="sort by stars" style={{ margin: 5 }}>Sort by stars</InputLabel>
                   <FormControl size="small">
                     <Select
                       variant="outlined"
@@ -325,6 +329,7 @@ export default function MiniDrawer(props) {
                       id="demo-customized-select"
                       value={props.sort}
                       onChange={props.radiochange}
+                      label="sort by stars"
                     >
                       <MenuItem value="">
                         <em>None</em>

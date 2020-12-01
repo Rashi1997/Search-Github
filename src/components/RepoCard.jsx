@@ -32,7 +32,6 @@ class Repo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      images: [],
     };
   }
   unique(repo, bookmark) {
@@ -66,6 +65,7 @@ class Repo extends Component {
                 aria-label="avatar"
                 src={repos.owner.avatarUrl}
                 className="avatar"
+                alt="avatar"
               ></Avatar>
             </a>
           }
@@ -100,7 +100,7 @@ class Repo extends Component {
               </Typography>
 
               <a href={repos.url} target="_blank" rel="noreferrer">
-                <GoLinkExternal size={24} />
+              <GoLinkExternal size={24} /> 
               </a>
             </div>
           }
@@ -165,7 +165,7 @@ class Repo extends Component {
         <Box style={{ margin: 10 }}>
           {repos.repositoryTopics.nodes.length > 0 ? (
             <Typography
-              align="justify"
+              align="center"
               variant="body2"
               color="textSecondary"
               component="p"
@@ -184,6 +184,7 @@ class Repo extends Component {
                   margin: 2,
                   color: "white",
                   backgroundColor: "#E34633",
+                  fontWeight: "bold"
                 }}
                 label={item.topic.name}
               />
