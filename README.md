@@ -113,7 +113,7 @@ Make sure you have npm installed!
 <!-- ARCHITECTURE OF THE APP -->
 ## Architecture
 
-The componet architecture of the app is as follows:
+The component architecture of the app is as follows:
 <p align="center">
   <img src="images/architecture.png" alt="Logo">
 </p>
