@@ -2,6 +2,26 @@ import React from "react";
 import RingLoader from "react-spinners/RingLoader";
 import Repo from "./RepoCard";
 
+/**
+ * This component loads the cards for each repository
+ * in the filtered state or the bookmarks. This component
+ * is reused both in Bookmarks.jsx and Drawer.jsx components.
+ * It also checks for error from API call and the isLoaded 
+ * state before displaying cards.
+ * 
+ * States: 
+ * 
+ * Props: 
+ *         bookmark
+ *         filtered
+ *         addBookmark
+ *         removeBookmark
+ *         error
+ *         isLoaded
+ *
+ * Child Components: 
+ *        RepoCard.jsx
+ */
 export default function Cards(props) {
   const displayItems = (repo) => {
     return (

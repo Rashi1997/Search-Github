@@ -14,7 +14,26 @@ import Typography from "@material-ui/core/Typography";
 import ReactWordcloud from "react-wordcloud";
 import Cards from "./Cards";
 
+/**
+ * This component loads the word cloud visualization
+ * for bookmarks based on langugae and topics frequency.
+ * It also loads all the cards for the bookmarks and 
+ * the user can remove the bookmarks from here.
+ * 
+ * States: 
+ *        open
+ * Props: 
+ *        addBookmark
+ *        removeBookmark
+ *        bookmark
+ *        countByLanguageTopics
+ * 
+ * Child Components: 
+ *        Cards.jsx
+ */
+
 export default function Bookmarks(props) {
+  /** state of the dialog - open */
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("lg"));
@@ -55,10 +74,10 @@ export default function Bookmarks(props) {
       </MuiDialogTitle>
     );
   });
-  const countFormat = (countByLanguage) => {
+  const countFormat = (countByLanguageTopics) => {
     let objects = [];
-    Object.keys(countByLanguage).forEach((key) => {
-      objects.push({ "text": key, "value": countByLanguage[key] });
+    Object.keys(countByLanguageTopics).forEach((key) => {
+      objects.push({ "text": key, "value": countByLanguageTopics[key] });
     });
     return objects
   };
@@ -102,11 +121,11 @@ const size = [500, 200];
           <DialogContentText>
             <Box display="flex" flexDirection="column"  alignItems="stretch" padding={1}>
               <Box alignSelf="center">
-                {Object.keys(props.countByLanguage).length ? (
+                {Object.keys(props.countByLanguageTopics).length ? (
                   <ReactWordcloud
                     options={options}
                     size={size}
-                    words={countFormat(props.countByLanguage)}
+                    words={countFormat(props.countByLanguageTopics)}
                   />
                 ) : (
                   "Nothing in Bookmarks"

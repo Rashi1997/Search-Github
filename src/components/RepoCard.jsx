@@ -13,6 +13,21 @@ import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import BookmarkIcon from "@material-ui/icons/Bookmark";
 import { GoRepoForked, GoStar, GoLinkExternal } from "react-icons/go";
 
+/**
+ * This component loads the code for a single card repository.
+ * 
+ * States: 
+ * 
+ * Props: 
+ *        repo
+ *        addBookmark
+ *        removeBookmark
+ *        bookmark
+ * 
+ * Child Components: 
+ * 
+ */
+
 class Repo extends Component {
   constructor(props) {
     super(props);

@@ -32,7 +32,39 @@ import Sort from "@material-ui/icons/Sort";
 import RotateLeft from "@material-ui/icons/RotateLeft";
 import Cards from "./Cards";
 import Bookmarks from "./Bookmarks";
-
+ 
+/**
+ * This component loads the sidebar and the 
+ * form. The bookmarks and repository cards are loaded
+ * as child components.
+ * 
+ * States: 
+ *        open
+ * 
+ * Props: 
+ *         searchname
+ *         handleChange
+ *         topicsfilter
+ *         settopicInput
+ *         getuniquetopics
+ *         filtered
+ *         languagefilter
+ *         setlanguageInput
+ *         getuniquelanguages
+ *         sort
+ *         radiochange
+ *         reset
+ *         addBookmark
+ *         removeBookmark
+ *         bookmark
+ *         countByLanguageTopics
+ *         error
+ *         isLoaded
+ *
+ * Child Components: 
+ *        Cards.jsx
+ *        Bookmarks.jsx
+ */
 const drawerWidth = 300;
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -100,6 +132,7 @@ const useStyles = makeStyles((theme) => ({
 export default function MiniDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
+  /** state of the sidebar - open */
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
@@ -337,7 +370,7 @@ export default function MiniDrawer(props) {
               style={{ marginLeft: 25 }}
               primary={<Bookmarks 
                 addBookmark={props.addBookmark}
-                removeBookmark={props.removeBookmark} bookmark={props.bookmark} countByLanguage={props.countByLanguage} />}
+                removeBookmark={props.removeBookmark} bookmark={props.bookmark} countByLanguageTopics={props.countByLanguageTopics} />}
             ></ListItemText>
           </ListItem>
         </List>

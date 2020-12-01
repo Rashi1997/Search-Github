@@ -1,25 +1,56 @@
 import React from "react";
 import "fontsource-roboto";
 import data from "../data.js";
-import Repo from "./RepoCard";
 import Drawer from "./Drawer";
 import _ from "lodash";
-
+ 
+/**
+ * This component does the Github API call and does
+ * the filtering/sorting. It also has props and methods
+ *  to aggregate bookmarks.
+ * 
+ * States: 
+ *        error
+ *        isLoaded
+ *        data
+ *        filtered
+ *        searchname
+ *        languagefilter
+ *        topicsfilter
+ *        sort
+ *        bookmark
+ *        countByLanguageTopics
+ * 
+ * Props: 
+ * 
+ * Child Components: 
+ *        Drawer.jsx
+ */
 export default class Filtered extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      /** error while loading data. */
       error: null,
+      /** boolean for whether the  API has loaded data. */
       isLoaded: false,
+      /** state to store the repository data */
       data: [],
+      /** state to store the filtered repository */
       filtered: [],
-      cart: 0,
+      /** storing the search keyword */
       searchname: "as",
+      /** state to store the selected language filter */
       languagefilter: null,
+      /** state to store the selected topics filters */
       topicsfilter: [],
+      /** state to store the selected sort filter */
       sort: "",
+      /** state to store the bookmarked repositories */
       bookmark: [],
-      countByLanguage: {},
+      /** state to store aggregate of language and topics
+       *  totals in bookmarks */
+      countByLanguageTopics: {},
     };
     this.handleChange = this.handleChange.bind(this);
     this.reset = this.reset.bind(this);
@@ -31,23 +62,11 @@ export default class Filtered extends React.Component {
     this.settopicInput = this.settopicInput.bind(this);
     this.addBookmark = this.addBookmark.bind(this);
     this.removeBookmark = this.removeBookmark.bind(this);
-    this.displayItems = this.displayItems.bind(this);
   }
 
   componentDidMount() {
     this.fetchSearchResults(this.state.searchname);
   }
-
-  displayItems = (repo) => {
-    return (
-      <Repo
-        repo={repo}
-        addBookmark={() => this.addBookmark(repo)}
-        removeBookmark={() => this.removeBookmark(repo.node.nameWithOwner)}
-        bookmark={this.state.bookmark}
-      ></Repo>
-    );
-  };
 
   fetchSearchResults = async (query) => {
     query = _.replace(query, new RegExp("[\\\\]+"), "\\");
@@ -170,7 +189,6 @@ export default class Filtered extends React.Component {
   handleChange(event) {
     this.setState({ searchname: event.target.value, error: null });
     this.fetchSearchResults(event.target.value);
-    // this.resetall()
     this.updatedata(
       this.state.topicsfilter,
       this.state.languagefilter,
@@ -227,7 +245,7 @@ export default class Filtered extends React.Component {
         last = keys.pop();
       keys.reduce((r, a) => (r[a] = r[a] || {}), object)[last] = value;
     });
-    this.setState({ countByLanguage: object });
+    this.setState({ countByLanguageTopics: object });
   }
   reset(event) {
     this.setState({
@@ -254,32 +272,30 @@ export default class Filtered extends React.Component {
       sort,
       topicsfilter,
       languagefilter,
-      countByLanguage,
-      message,
+      countByLanguageTopics,
       bookmark
     } = this.state;
     return (
       <div className="App">
         <Drawer
-          filtered={filtered}
-          addBookmark={this.addBookmark}
-          removeBookmark={this.removeBookmark}
-          error={error}
-          isLoaded={isLoaded}
-          message={message}
           searchname={this.state.searchname}
           handleChange={this.handleChange}
-          sort={sort}
           topicsfilter={topicsfilter}
-          languagefilter={languagefilter}
           settopicInput={this.settopicInput}
           getuniquetopics={this.getuniquetopics}
+          filtered={filtered}
+          languagefilter={languagefilter}
           setlanguageInput={this.setlanguageInput}
           getuniquelanguages={this.getuniquelanguages}
+          sort={sort}
           radiochange={this.radiochange}
           reset={this.reset}
-          countByLanguage={countByLanguage}
+          addBookmark={this.addBookmark}
+          removeBookmark={this.removeBookmark}
           bookmark={bookmark}
+          countByLanguageTopics={countByLanguageTopics}
+          error={error}
+          isLoaded={isLoaded}
         />
       </div>
     );
