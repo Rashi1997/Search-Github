@@ -15,7 +15,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://agile-crag-93359.herokuapp.com/#">
     <img src="images/search.png" alt="Logo" width="80" height="80">
   </a>
 
@@ -27,7 +27,7 @@
     <a href="https://github.com/Rashi1997/Search-Github"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://agile-crag-93359.herokuapp.com/#">View Demo</a>
+    <a href="images/screenshot.mov">View Demo</a>
     ·
     <a href="https://github.com/Rashi1997/Search-Github/issues">Report Bug</a>
     ·
