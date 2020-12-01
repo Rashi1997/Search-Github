@@ -113,10 +113,140 @@ Make sure you have npm installed!
 <!-- ARCHITECTURE OF THE APP -->
 ## Architecture
 
-Organization of your components
-How data is passed down through your components
-How user interactions can trigger changes in the state of components
+The componet architecture of the app is as follows:
+<p align="center">
+  <img src="images/architecture.png" alt="Logo">
+</p>
+Lets go through each component:
 
+### Filtered.jsx
+
+```Js
+/**
+ * This component does the Github API call and does
+ * the filtering/sorting. It also has props and methods
+ *  to aggregate bookmarks.
+ * 
+ * States: 
+ *        error
+ *        isLoaded
+ *        data
+ *        filtered
+ *        searchname
+ *        languagefilter
+ *        topicsfilter
+ *        sort
+ *        bookmark
+ *        countByLanguageTopics
+ * 
+ * Props: 
+ * 
+ * Child Components: 
+ *        Drawer.jsx
+ */
+```
+
+### Drawer.jsx
+
+```Js
+/**
+ * This component loads the sidebar and the 
+ * form. The bookmarks and repository cards are loaded
+ * as child components.
+ * 
+ * States: 
+ *        open
+ * 
+ * Props: 
+ *         searchname
+ *         handleChange
+ *         topicsfilter
+ *         settopicInput
+ *         getuniquetopics
+ *         filtered
+ *         languagefilter
+ *         setlanguageInput
+ *         getuniquelanguages
+ *         sort
+ *         radiochange
+ *         reset
+ *         addBookmark
+ *         removeBookmark
+ *         bookmark
+ *         countByLanguageTopics
+ *         error
+ *         isLoaded
+ *
+ * Child Components: 
+ *        Cards.jsx
+ *        Bookmarks.jsx
+ */
+```
+
+### Cards.jsx
+
+```Js
+/**
+ * This component loads the cards for each repository
+ * in the filtered state or the bookmarks. This component
+ * is reused both in Bookmarks.jsx and Drawer.jsx components.
+ * It also checks for error from API call and the isLoaded 
+ * state before displaying cards.
+ * 
+ * States: 
+ * 
+ * Props: 
+ *         bookmark
+ *         filtered
+ *         addBookmark
+ *         removeBookmark
+ *         error
+ *         isLoaded
+ *
+ * Child Components: 
+ *        RepoCard.jsx
+ */
+```
+
+### Bookmarks.jsx
+
+```Js
+/**
+ * This component loads the word cloud visualization
+ * for bookmarks based on langugae and topics frequency.
+ * It also loads all the cards for the bookmarks and 
+ * the user can remove the bookmarks from here.
+ * 
+ * States: 
+ *        open
+ * Props: 
+ *        addBookmark
+ *        removeBookmark
+ *        bookmark
+ *        countByLanguageTopics
+ * 
+ * Child Components: 
+ *        Cards.jsx
+ */
+```
+### RepoCard.jsx
+
+```Js
+/**
+ * This component loads the code for a single card repository.
+ * 
+ * States: 
+ * 
+ * Props: 
+ *        repo
+ *        addBookmark
+ *        removeBookmark
+ *        bookmark
+ * 
+ * Child Components: 
+ * 
+ */
+```
 
 <!-- USAGE EXAMPLES -->
 ## Usage
@@ -181,3 +311,4 @@ Project Link: [https://github.com/Rashi1997/Search-Github](https://github.com/Ra
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/rashidhar/
 [app-screenshot]: images/screenshot.png
+[architecture]: images/architecture.png
