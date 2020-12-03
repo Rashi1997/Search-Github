@@ -27,8 +27,6 @@
     <a href="https://warm-castle-41635.herokuapp.com/"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="images/screenshot.mov">View Demo</a>
-    ·
     <a href="https://github.com/Rashi1997/Search-Github/issues">Report Bug</a>
     ·
     <a href="https://github.com/Rashi1997/Search-Github/issues">Request Feature</a>
